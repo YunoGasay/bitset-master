@@ -55,25 +55,9 @@ public class Tests {
         bitSetSimple1.add(new int[] {1,2,3,5,7});
         bitSetSimple2.add(new int[] {4,9,6,5,7});
 
-        assertEquals(false, bitSetSimple1.isExist(4));
-        assertEquals(true, bitSetSimple2.isExist(4));
+        assertFalse(bitSetSimple1.isExist(4));
+        assertTrue(bitSetSimple2.isExist(4));
 
     }
-
-    @Test
-    public void iteratorTest() {
-        bitSetSimple1.add(new int[] {1,2,3,5,7});
-        String numbers = "";
-
-        Iterator<Integer> it = bitSetSimple1.iterator();
-        while (it.hasNext())
-            numbers += it.next() + " ";
-
-        assertEquals("1 2 3 5 7", numbers.trim());
-    }
-
-
-
-
 
 }

@@ -1,18 +1,4 @@
-/*
-
-*** Вариант 18
-*** Реализовать множество над заданным набором объектов. Количество элементов в наборе задается в конструкторе.
-***Конкретный элемент набор идентифицируется неотрицательным целым от нуля до количества элементов - 1.
-***Операции: пересечение, объединение, дополнение, добавление/удаление заданного элемента (массива элементов),
-***проверка принадлежности элемента множеству. Бонус: итератор по множеству.
-
- */
-
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
-public class BitSetSimple implements Iterable<Integer> {   // реализация множества
+public class BitSetSimple {  
     public int[] bitSet;
 
     public BitSetSimple(int num) {  // Количество элементов в наборе задается в конструкторе
@@ -63,7 +49,7 @@ public class BitSetSimple implements Iterable<Integer> {   // реализаци
     }
 
     public BitSetSimple union(BitSetSimple anotherBitSet) {   //объединение
-        int size = bitSet.length > anotherBitSet.bitSet.length ? bitSet.length : anotherBitSet.bitSet.length;
+        int size = Math.max(bitSet.length, anotherBitSet.bitSet.length);
         int[] resBitSet = new int[size];
         for (int i = 0 ; i < bitSet.length; i++) {
             if (bitSet[i] == 1 || anotherBitSet.bitSet[i] == 1)
@@ -79,7 +65,7 @@ public class BitSetSimple implements Iterable<Integer> {   // реализаци
     }
 
     public BitSetSimple complement(BitSetSimple anotherBitSet) {   //дополнение
-        int size = bitSet.length > anotherBitSet.bitSet.length ? bitSet.length : anotherBitSet.bitSet.length;
+        int size = Math.max(bitSet.length, anotherBitSet.bitSet.length);
         int[] resBitSet = new int[size];
         for (int i = 0 ; i < bitSet.length; i++) {
             if (bitSet[i] == 0 && anotherBitSet.bitSet[i] == 1)
@@ -101,49 +87,13 @@ public class BitSetSimple implements Iterable<Integer> {   // реализаци
 
     public String getNumbers() {
 
-        String numbers = "";
+        StringBuilder numbers = new StringBuilder();
 
         for (int i = 0; i < bitSet.length; i++) {
             if (bitSet[i] == 1)
-                numbers += i + " ";
+                numbers.append(i).append(" ");
         }
 
-
-
-        return numbers.trim();
-    }
-
-
-    @Override
-    public Iterator iterator() {    //Бонус : итератор по множеству
-        Iterator<Integer> it = new Iterator<Integer>() {
-
-            private int currentIndex = 0;
-            private int tempIndex;
-
-            @Override
-            public boolean hasNext() {
-                tempIndex = currentIndex;
-                while (tempIndex < bitSet.length) {
-                   if ( bitSet[tempIndex] == 0 ) {
-                       tempIndex++;
-                   } else  {
-                       return tempIndex < bitSet.length;
-                   }
-                }
-
-                return false;
-            }
-
-            @Override
-            public Integer next() {
-                while (bitSet[currentIndex] != 1)
-                    currentIndex++;
-
-                return currentIndex++;
-            }
-        };
-
-        return it;
+        return numbers.toString().trim();
     }
 }
